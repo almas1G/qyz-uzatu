@@ -288,7 +288,7 @@
             line-height: 1; 
         }
 
-        /* === КҮНТІЗБЕ - ДӨҢГЕЛЕКПЕН ТҮЗЕТІЛДІ === */
+        /* === КҮНТІЗБЕ - ҚАРАПАЙЫМ БЕЛГІ === */
         .calendar-container { 
             width: 100%; 
             max-width: 320px; 
@@ -304,35 +304,27 @@
         .calendar-day-name { font-size: 0.65rem; font-weight: 600; opacity: 0.6; padding-bottom: 3px; }
         .calendar-day { 
             font-size: 0.85rem; 
-            padding: 4px 0; 
+            padding: 5px 0; 
             position: relative; 
             display: flex; 
             justify-content: center; 
             align-items: center; 
+            border-radius: 50%;
+            width: 100%;
+            aspect-ratio: 1;
         }
         
-        /* === ДӨҢГЕЛЕК (КРУЖОЧЕК) === */
-        .calendar-day.circle-active::before {
-            content: '';
-            position: absolute;
-            width: 32px;
-            height: 32px;
+        /* === ҚАРАПАЙЫМ ДӨҢГЕЛЕК БЕЛГІ === */
+        .calendar-day.marked {
             background-color: var(--primary-brown);
-            border-radius: 50%;
-            z-index: 0;
-            animation: pulseCircle 2s ease-in-out infinite;
-        }
-        .calendar-day.circle-active span {
-            position: relative;
-            z-index: 1;
             color: var(--white) !important;
             font-weight: bold;
+            border-radius: 50%;
         }
-
-        @keyframes pulseCircle {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(134, 93, 54, 0.4); }
-            50% { transform: scale(1.08); box-shadow: 0 0 0 8px rgba(134, 93, 54, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(134, 93, 54, 0); }
+        .calendar-day.marked span {
+            color: var(--white) !important;
+            position: relative;
+            z-index: 1;
         }
 
         /* === ТАЙМЕР === */
@@ -452,12 +444,7 @@
             section { padding: 30px 15px 25px 15px !important; }
             .countdown-item { width: 58px !important; height: 58px !important; padding: 10px 2px !important; }
             .countdown-number { font-size: 1.1rem !important; }
-            
-            /* Телефонда дөңгелек кішірейеді */
-            .calendar-day.circle-active::before {
-                width: 26px !important;
-                height: 26px !important;
-            }
+            .calendar-day { font-size: 0.75rem !important; padding: 3px 0 !important; }
         }
 
         @media (max-width: 380px) {
@@ -471,12 +458,7 @@
             .countdown-label { font-size: 0.5rem !important; }
             .hero-top-graphic { width: 70px !important; height: 70px !important; }
             .hero-top-icon { font-size: 1.2rem !important; }
-            
-            .calendar-day.circle-active::before {
-                width: 22px !important;
-                height: 22px !important;
-            }
-            .calendar-day { font-size: 0.75rem !important; }
+            .calendar-day { font-size: 0.7rem !important; padding: 2px 0 !important; }
         }
     </style>
 </head>
@@ -548,7 +530,7 @@
     </section>
 
     <!-- ============================================================ -->
-    <!-- СЕКЦИЯ 3: КҮНТІЗБЕ (ДӨҢГЕЛЕКПЕН) -->
+    <!-- СЕКЦИЯ 3: КҮНТІЗБЕ - ҚАРАПАЙЫМ ДӨҢГЕЛЕКПЕН -->
     <!-- ============================================================ -->
     <section id="calendar">
         <div class="bg-decor"></div>
@@ -565,14 +547,47 @@
                     <div class="calendar-day-name">Сб</div>
                     <div class="calendar-day-name">Вс</div>
                     
-                    <div class="calendar-day"></div><div class="calendar-day"></div><div class="calendar-day"></div><div class="calendar-day"></div><div class="calendar-day"></div>
-                    <div class="calendar-day"><span>01</span></div><div class="calendar-day"><span>02</span></div>
-                    <div class="calendar-day"><span>03</span></div><div class="calendar-day"><span>04</span></div><div class="calendar-day"><span>05</span></div><div class="calendar-day"><span>06</span></div><div class="calendar-day"><span>07</span></div><div class="calendar-day"><span>08</span></div><div class="calendar-day"><span>09</span></div>
-                    <div class="calendar-day"><span>10</span></div><div class="calendar-day"><span>11</span></div><div class="calendar-day"><span>12</span></div><div class="calendar-day"><span>13</span></div><div class="calendar-day"><span>14</span></div><div class="calendar-day"><span>15</span></div><div class="calendar-day"><span>16</span></div>
-                    <div class="calendar-day"><span>17</span></div><div class="calendar-day"><span>18</span></div><div class="calendar-day"><span>19</span></div><div class="calendar-day"><span>20</span></div><div class="calendar-day"><span>21</span></div><div class="calendar-day"><span>22</span></div><div class="calendar-day"><span>23</span></div>
-                    <div class="calendar-day"><span>24</span></div><div class="calendar-day"><span>25</span></div><div class="calendar-day"><span>26</span></div><div class="calendar-day"><span>27</span></div><div class="calendar-day"><span>28</span></div><div class="calendar-day"><span>29</span></div>
-                    <!-- === МЫНА ЖЕРДЕ ДӨҢГЕЛЕК (КРУЖОЧЕК) === -->
-                    <div class="calendar-day circle-active"><span>30</span></div>
+                    <div class="calendar-day"></div>
+                    <div class="calendar-day"></div>
+                    <div class="calendar-day"></div>
+                    <div class="calendar-day"></div>
+                    <div class="calendar-day"></div>
+                    <div class="calendar-day"><span>01</span></div>
+                    <div class="calendar-day"><span>02</span></div>
+                    
+                    <div class="calendar-day"><span>03</span></div>
+                    <div class="calendar-day"><span>04</span></div>
+                    <div class="calendar-day"><span>05</span></div>
+                    <div class="calendar-day"><span>06</span></div>
+                    <div class="calendar-day"><span>07</span></div>
+                    <div class="calendar-day"><span>08</span></div>
+                    <div class="calendar-day"><span>09</span></div>
+                    
+                    <div class="calendar-day"><span>10</span></div>
+                    <div class="calendar-day"><span>11</span></div>
+                    <div class="calendar-day"><span>12</span></div>
+                    <div class="calendar-day"><span>13</span></div>
+                    <div class="calendar-day"><span>14</span></div>
+                    <div class="calendar-day"><span>15</span></div>
+                    <div class="calendar-day"><span>16</span></div>
+                    
+                    <div class="calendar-day"><span>17</span></div>
+                    <div class="calendar-day"><span>18</span></div>
+                    <div class="calendar-day"><span>19</span></div>
+                    <div class="calendar-day"><span>20</span></div>
+                    <div class="calendar-day"><span>21</span></div>
+                    <div class="calendar-day"><span>22</span></div>
+                    <div class="calendar-day"><span>23</span></div>
+                    
+                    <div class="calendar-day"><span>24</span></div>
+                    <div class="calendar-day"><span>25</span></div>
+                    <div class="calendar-day"><span>26</span></div>
+                    <div class="calendar-day"><span>27</span></div>
+                    <div class="calendar-day"><span>28</span></div>
+                    <div class="calendar-day"><span>29</span></div>
+                    <!-- === БЕЛГІЛЕНГЕН КҮН - ҚАРАПАЙЫМ ДӨҢГЕЛЕК === -->
+                    <div class="calendar-day marked"><span>30</span></div>
+                    
                     <div class="calendar-day"><span>31</span></div>
                 </div>
             </div>
