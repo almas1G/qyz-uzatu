@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Qyz Uzatu | Шақыру</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-cream: #FDFBF7;
+            --primary-brown: #865D36;
+            --dark-text: #4A3B32;
+            --white: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-cream);
+            color: var(--dark-text);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* --- КІРУ ТЕРЕЗЕСІ (WELCOME SCREEN) --- */
+        #welcomeOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-cream);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease, visibility 0.8s;
+            text-align: center;
+            padding: 20px;
+        }
+        .welcome-card {
+            max-width: 400px;
+            padding: 40px 20px;
+            border: 1px solid rgba(134, 93, 54, 0.2);
+            border-radius: 20px;
+            background: var(--white);
+            box-shadow: 0 10px 30px rgba(134, 93, 54, 0.05);
+        }
+        .welcome-btn {
+            background-color: var(--primary-brown);
+            color: var(--white);
+            border: none;
+            padding: 15px 35px;
+            border-radius: 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            margin-top: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(134, 93, 54, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* --- Плеер батырмасы --- */
+        .music-player-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: var(--primary-brown);
+            color: var(--white);
+            border: 2px solid var(--bg-cream);
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            font-size: 9px;
+            text-align: center;
+            padding: 5px;
+        }
+        .music-player-btn i { font-size: 14px; margin-bottom: 2px; }
+        .music-player-btn span { font-size: 8px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+
+        /* --- Скролл батырмалары --- */
+        .next-section-btn {
+            margin-top: 35px;
+            background: none;
+            border: 2px solid var(--primary-brown);
+            color: var(--primary-brown);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .next-section-btn i { font-size: 1.1rem; animation: bounceArrow 1.8s infinite; }
+        .timer-section-bg .next-section-btn { border-color: var(--white); color: var(--white); }
+
+        @keyframes bounceArrow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(6px); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        section {
+            min-height: 100vh;
+            width: 100%;
+            max-width: 480px; 
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 25px;
+            text-align: center;
+            position: relative;
+            background-color: var(--bg-cream);
+        }
+
+        .bg-decor {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            opacity: 0.08;
+            background-image: radial-gradient(var(--primary-brown) 1px, transparent 0);
+            background-size: 20px 20px;
+            z-index: 1;
+        }
+
+        .section-content { position: relative; z-index: 2; width: 100%; }
+
+        .font-script {
+            font-family: 'Caveat', cursive;
+            font-size: 3.8rem;
+            color: var(--primary-brown);
+            font-weight: 700;
+            line-height: 1.1;
+        }
+        .font-serif { font-family: 'Playfair Display', serif; letter-spacing: 1px; }
+
+        @keyframes letterBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        .bouncing-text span { display: inline-block; animation: letterBounce 1.4s ease-in-out infinite; }
+
+        #hero { justify-content: space-between; padding-top: 100px; padding-bottom: 50px; }
+        
+        .hero-top-graphic {
+            width: 130px;
+            height: 130px;
+            border: 2px solid var(--primary-brown);
+            border-radius: 50% 50% 0 0;
+            margin-bottom: 20px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .hero-top-graphic::after {
+            content: '';
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            border: 1px dashed var(--primary-brown);
+            border-radius: 50% 50% 0 0;
+        }
+        .hero-top-icon { font-size: 2.5rem; color: var(--primary-brown); opacity: 0.8; }
+        .main-subtitle { text-transform: uppercase; letter-spacing: 6px; font-size: 1.2rem; color: var(--dark-text); margin-top: 10px; }
+
+        .invitation-header { margin-bottom: 20px; }
+        .invitation-text { font-size: 1.05rem; line-height: 1.8; color: var(--dark-text); margin-bottom: 30px; padding: 0 10px; }
+
+        .big-date-display { display: flex; justify-content: center; align-items: center; margin: 30px 0; color: var(--primary-brown); }
+        .date-side { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; padding: 0 15px; }
+        .date-center { font-size: 3.5rem; font-family: 'Playfair Display', serif; font-weight: 600; border-left: 1px solid var(--primary-brown); border-right: 1px solid var(--primary-brown); padding: 0 25px; line-height: 1; }
+
+        .calendar-container { width: 100%; max-width: 340px; margin: 20px auto; background: rgba(255, 255, 255, 0.6); padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); border: 1px solid rgba(134, 93, 54, 0.1); }
+        .calendar-month { text-transform: uppercase; letter-spacing: 4px; font-size: 1.1rem; margin-bottom: 15px; font-weight: 600; color: var(--primary-brown); }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; text-align: center; }
+        .calendar-day-name { font-size: 0.75rem; font-weight: 600; opacity: 0.6; padding-bottom: 5px; }
+        .calendar-day { font-size: 0.95rem; padding: 6px 0; position: relative; display: flex; justify-content: center; align-items: center; }
+        .calendar-day.heart-active::after { content: '♥'; position: absolute; font-size: 2.2rem; color: transparent; -webkit-text-stroke: 1px var(--primary-brown); z-index: 1; transform: scale(1.1); }
+        .calendar-day.heart-active span { position: relative; z-index: 2; color: var(--primary-brown); font-weight: bold; }
+
+        .timer-section-bg { background-color: var(--primary-brown) !important; color: var(--white); }
+        .timer-section-bg .font-script { color: var(--white); }
+        .countdown-container { display: flex; justify-content: space-between; width: 100%; max-width: 340px; margin: 30px 0; }
+        .countdown-item { flex: 1; margin: 0 5px; background: rgba(255, 255, 255, 0.12); padding: 15px 5px; border-radius: 50%; width: 75px; height: 75px; display: flex; flex-direction: column; justify-content: center; align-items: center; border: 1px solid rgba(255,255,255,0.2); }
+        .countdown-number { font-size: 1.4rem; font-family: 'Playfair Display', serif; font-weight: 600; }
+        .countdown-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin-top: 2px; }
+
+        .address-block { margin: 25px 0; font-size: 1.1rem; }
+        .address-title { text-transform: uppercase; letter-spacing: 3px; font-size: 0.9rem; opacity: 0.7; margin-bottom: 5px; }
+        .address-hall { font-size: 1.4rem; font-weight: 600; color: var(--primary-brown); margin: 10px 0; }
+        .map-btn { background-color: var(--primary-brown); color: var(--white); border: none; padding: 14px 35px; border-radius: 30px; font-family: 'Montserrat', sans-serif; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; font-size: 0.85rem; margin-top: 15px; cursor: pointer; box-shadow: 0 4px 12px rgba(134, 93, 54, 0.3); display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+
+        .rsvp-card { width: 100%; max-width: 360px; background: var(--white); border-radius: 20px; padding: 30px 20px; box-shadow: 0 10px 30px rgba(134, 93, 54, 0.08); border: 1px solid rgba(134, 93, 54, 0.1); }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label { display: block; font-size: 0.85rem; margin-bottom: 8px; font-weight: 500; }
+        .form-control { width: 100%; background-color: var(--bg-cream); border: 1px solid rgba(134, 93, 54, 0.2); padding: 12px 15px; border-radius: 10px; font-family: inherit; font-size: 0.95rem; }
+        .form-control:focus { outline: none; border-color: var(--primary-brown); background-color: var(--white); }
+        .radio-group { display: flex; flex-direction: column; gap: 10px; margin-top: 5px; }
+        .radio-option { display: flex; align-items: center; position: relative; cursor: pointer; padding: 5px 0; }
+        .radio-option input { margin-right: 12px; accent-color: var(--primary-brown); width: 18px; height: 18px; }
+        .submit-btn { width: 100%; background-color: var(--primary-brown); color: var(--white); border: none; padding: 14px; border-radius: 10px; font-family: 'Montserrat', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 12px rgba(134, 93, 54, 0.2); }
+
+        .hosts-block { margin-top: 20px; }
+        .hosts-names { font-size: 1.5rem; font-weight: 500; letter-spacing: 1px; margin-top: 5px; color: var(--primary-brown); }
+        .footer-note { font-size: 1.4rem; line-height: 1.8; margin-top: 40px; padding: 0 15px; }
+    </style>
+</head>
+<body>
+
+    <!-- ОНЛАЙН ШАҚЫРУДЫ БАСТАУ ТЕРЕЗЕСІ (Кедергілерді жою) -->
+    <div id="welcomeOverlay">
+        <div class="welcome-card">
+            <h2 class="font-script" style="font-size: 3rem; margin-bottom: 10px;">Бегім-Ай</h2>
+            <p style="letter-spacing: 2px; font-size: 0.9rem; opacity: 0.8; margin-bottom: 20px;">Қыз Ұзату Той Шақыруы</p>
+            <button class="welcome-btn" onclick="startInvitation()">
+                <i class="fas fa-envelope-open-text"></i> Музыкамен ашу
+            </button>
+        </div>
+    </div>
+
+    <!-- Музыка түймесі -->
+    <div class="music-player-btn" id="musicToggle" style="display: none;">
+        <i class="fas fa-music" id="musicIcon"></i>
+        <span>Play</span>
+    </div>
+
+    <!-- Сен берген нақты аудио файл -->
+    <audio id="bgAudio" loop preload="auto">
+        <source src="WhatsApp Video 2026-06-17 at 21 (mp3cut.net).mp3" type="audio/mp3">
+    </audio>
+
+    <!-- СЕКЦИЯ 1: Басты бет -->
+    <section id="hero">
+        <div class="bg-decor"></div>
+        <div class="hero-top-graphic reveal active">
+            <i class="fas fa-feather-alt hero-top-icon"></i>
+        </div>
+        <div class="section-content">
+            <h1 class="font-script bouncing-text" id="bouncingTitle">Begim-Ay</h1>
+            <h2 class="main-subtitle font-serif">Qyz Uzatu</h2>
+        </div>
+        <button class="next-section-btn" onclick="slowScrollTo('invitation')">
+            <i class="fas fa-chevron-down"></i>
+        </button>
+    </section>
+
+    <!-- СЕКЦИЯ 2: Шақыру -->
+    <section id="invitation">
+        <div class="bg-decor"></div>
+        <div class="section-content reveal">
+            <h2 class="font-script invitation-header" style="font-size: 3.5rem;">Құрметті қонақтар!</h2>
+            <p class="invitation-text">
+                Сіздерді аяулы қызымыз <b>Бегім-Айдың</b> ұзату тойына арналған салтанатты ақ дастарханымыздың қадірлі қонағы болуға шақырамыз!
+            </p>
+            <div class="big-date-display font-serif">
+                <div class="date-side">Жексенбі</div>
+                <div class="date-center">30</div>
+                <div class="date-side">17:00</div>
+            </div>
+            <p style="letter-spacing: 3px; font-weight: 500; font-size: 1.1rem; color: var(--primary-brown);">ТАМЫЗ / 2026</p>
+            <button class="next-section-btn" onclick="slowScrollTo('calendar')">
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- СЕКЦИЯ 3: Күнтізбе -->
+    <section id="calendar">
+        <div class="section-content reveal">
+            <h2 class="font-script" style="font-size: 3.5rem; margin-bottom: 10px;">Той салтанаты</h2>
+            <div class="calendar-container">
+                <div class="calendar-month font-serif">Тамыз 2026</div>
+                <div class="calendar-grid">
+                    <div class="calendar-day-name">Пн</div><div class="calendar-day-name">Вт</div><div class="calendar-day-name">Ср</div><div class="calendar-day-name">Чт</div><div class="calendar-day-name">Пт</div><div class="calendar-day-name">Сб</div><div class="calendar-day-name">Вс</div>
+                    <div class="calendar-day"></div><div class="calendar-day"></div><div class="calendar-day"></div><div class="calendar-day"></div><div class="calendar-day"></div>
+                    <div class="calendar-day"><span>01</span></div><div class="calendar-day"><span>02</span></div><div class="calendar-day"><span>03</span></div><div class="calendar-day"><span>04</span></div><div class="calendar-day"><span>05</span></div><div class="calendar-day"><span>06</span></div><div class="calendar-day"><span>07</span></div><div class="calendar-day"><span>08</span></div><div class="calendar-day"><span>09</span></div><div class="calendar-day"><span>10</span></div><div class="calendar-day"><span>11</span></div><div class="calendar-day"><span>12</span></div><div class="calendar-day"><span>13</span></div><div class="calendar-day"><span>14</span></div><div class="calendar-day"><span>15</span></div><div class="calendar-day"><span>16</span></div><div class="calendar-day"><span>17</span></div><div class="calendar-day"><span>18</span></div><div class="calendar-day"><span>19</span></div><div class="calendar-day"><span>20</span></div><div class="calendar-day"><span>21</span></div><div class="calendar-day"><span>22</span></div><div class="calendar-day"><span>23</span></div><div class="calendar-day"><span>24</span></div><div class="calendar-day"><span>25</span></div><div class="calendar-day"><span>26</span></div><div class="calendar-day"><span>27</span></div><div class="calendar-day"><span>28</span></div><div class="calendar-day"><span>29</span></div>
+                    <div class="calendar-day heart-active"><span>30</span></div><div class="calendar-day"><span>31</span></div>
+                </div>
+            </div>
+            <button class="next-section-btn" onclick="slowScrollTo('timer')">
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- СЕКЦИЯ 4: Кері санақ -->
+    <section id="timer" class="timer-section-bg">
+        <div class="section-content reveal">
+            <h2 class="font-script" style="font-size: 3.5rem;">Ұзату тойына дейін:</h2>
+            <div class="countdown-container">
+                <div class="countdown-item"><span class="countdown-number" id="days">00</span><span class="countdown-label">Күн</span></div>
+                <div class="countdown-item"><span class="countdown-number" id="hours">00</span><span class="countdown-label">Сағат</span></div>
+                <div class="countdown-item"><span class="countdown-number" id="minutes">00</span><span class="countdown-label">Минут</span></div>
+                <div class="countdown-item"><span class="countdown-number" id="seconds">00</span><span class="countdown-label">Секунд</span></div>
+            </div>
+            <button class="next-section-btn" onclick="slowScrollTo('location')">
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- СЕКЦИЯ 5: Мекен-жай -->
+    <section id="location">
+        <div class="bg-decor"></div>
+        <div class="section-content reveal">
+            <h2 class="font-script" style="font-size: 3.5rem;">Мекен-жайымыз</h2>
+            <div class="address-block"><p class="address-title">Ауыл / Қала</p><p style="font-weight: 500;">Алматы қаласы</p></div>
+            <div class="address-block"><p class="address-title">Көшесі</p><p style="font-weight: 500;">Атагельды Исмаилова 24</p></div>
+            <div class="address-block">
+                <p class="address-title">Мейрамхана</p>
+                <p class="address-hall">"Сұлтан Сарай"</p>
+            </div>
+            <a href="https://2gis.kz" target="_blank" class="map-btn"><i class="fas fa-map-marked-alt"></i> Картаны ашу</a>
+            <br>
+            <button class="next-section-btn" onclick="slowScrollTo('rsvp')">
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- СЕКЦИЯ 6: Сауалнама -->
+    <section id="rsvp">
+        <div class="bg-decor"></div>
+        <div class="section-content reveal">
+            <h2 class="font-script" style="font-size: 3.5rem; margin-bottom: 5px;">Сауалнама</h2>
+            <div class="rsvp-card">
+                <form id="rsvpForm" onsubmit="handleFormSubmit(event)">
+                    <div class="form-group">
+                        <label for="guestName">Аты-жөнініз:</label>
+                        <input type="text" id="guestName" class="form-control" placeholder="Атыңызды енгізіңіз" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="spouseName">Жұбайыңыздың аты-жөні (бар болса):</label>
+                        <input type="text" id="spouseName" class="form-control" placeholder="Жұбайыңыздың аты">
+                    </div>
+                    <div class="form-group">
+                        <label>Тойға келе аласыз ба?</label>
+                        <div class="radio-group">
+                            <label class="radio-option"><input type="radio" name="attendance" value="Иә, әрине келемін" checked><span>Иә, әрине келемін</span></label>
+                            <label class="radio-option"><input type="radio" name="attendance" value="Өкінішке орай, келе алмаймын"><span>Өкінішке орай, келе алмаймын</span></label>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-btn">Жіберу</button>
+                </form>
+            </div>
+            <button class="next-section-btn" onclick="slowScrollTo('footer')">
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- СЕКЦИЯ 7: Подвал -->
+    <section id="footer">
+        <div class="bg-decor"></div>
+        <div class="section-content reveal">
+            <div class="hosts-block"><p style="text-transform: uppercase; letter-spacing: 3px; font-size: 0.85rem; opacity: 0.7;">Той иелері:</p><p class="hosts-names font-serif">Гайдар - Меруерт</p></div>
+            <p class="font-script footer-note">Келіңіздер, тойымыздың қадірлі қонағы болыңыздар!</p>
+            <div style="margin-top: 50px; opacity: 0.4; font-size: 0.8rem;">© 2026 Салтанатты Шақыру</div>
+        </div>
+    </section>
+
+    <script>
+        const sectionsOrder = ['hero', 'invitation', 'calendar', 'timer', 'location', 'rsvp', 'footer'];
+        let isScrolling = false;
+        let autoScrollTimer;
+        let isPlaying = false;
+
+        const musicToggle = document.getElementById('musicToggle');
+        const musicIcon = document.getElementById('musicIcon');
+        const bgAudio = document.getElementById('bgAudio');
+
+        // КІРУ БАТЫРМАСЫН БАСҚАНДАҒЫ ФУНКЦИЯ
+        function startInvitation() {
+            // Терезені жабу
+            const overlay = document.getElementById('welcomeOverlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.visibility = 'hidden';
+                musicToggle.style.display = 'flex'; // Плеерді көрсету
+            }, 800);
+
+            // Музыканы бірден іске қосу (Браузер енді блокталмайды)
+            bgAudio.play().then(() => {
+                isPlaying = true;
+                musicIcon.classList.replace('fa-music', 'fa-pause');
+                musicToggle.querySelector('span').innerText = 'Pause';
+            }).catch(e => console.log("Музыка қосылмады:", e));
+
+            // Автоскроллды бірінші беттен бастау
+            initAutoScrollTimer('invitation');
+        }
+
+        function slowScrollTo(id) {
+            const target = document.getElementById(id);
+            if (!target) return;
+
+            isScrolling = true;
+            const targetPosition = target.offsetTop;
+            const startPosition = window.pageYOffset;
+            const distance = targetPosition - startPosition;
+            const duration = 1500;
+            let start = null;
+
+            function step(timestamp) {
+                if (!start) start = timestamp;
+                const progress = timestamp - start;
+                let progressRatio = progress / duration;
+                let ease = progressRatio < 0.5 ? 2 * progressRatio * progressRatio : -1 + (4 - 2 * progressRatio) * progressRatio;
+
+                window.scrollTo(0, startPosition + distance * ease);
+
+                if (progress < duration) {
+                    window.requestAnimationFrame(step);
+                } else {
+                    setTimeout(() => { isScrolling = false; }, 200);
+                }
+            }
+            window.requestAnimationFrame(step);
+        }
+
+        function initAutoScrollTimer(nextSectionId) {
+            clearTimeout(autoScrollTimer);
+            if (!nextSectionId || nextSectionId === 'rsvp') return;
+
+            autoScrollTimer = setTimeout(() => {
+                if (!isScrolling) {
+                    slowScrollTo(nextSectionId);
+                }
+            }, 5000); // 5 секунд сайын ауысады
+        }
+
+        // Қолмен басқару плеери
+        musicToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (isPlaying) {
+                bgAudio.pause();
+                musicIcon.classList.replace('fa-pause', 'fa-music');
+                musicToggle.querySelector('span').innerText = 'Play';
+                isPlaying = false;
+            } else {
+                bgAudio.play();
+                musicIcon.classList.replace('fa-music', 'fa-pause');
+                musicToggle.querySelector('span').innerText = 'Pause';
+                isPlaying = true;
+            }
+        });
+
+        // Әріптер анимациясы
+        const titleContainer = document.getElementById('bouncingTitle');
+        const rawText = titleContainer.innerText;
+        titleContainer.innerHTML = '';
+        rawText.split('').forEach((char, index) => {
+            const span = document.createElement('span');
+            span.innerText = char === ' ' ? ' ' : char;
+            span.style.animationDelay = `${index * 0.08}s`;
+            titleContainer.appendChild(span);
+        });
+
+        // Элементтердің көрінуін бақылау
+        const reveals = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    const currentSectionId = entry.target.closest('section').id;
+                    const currentIndex = sectionsOrder.indexOf(currentSectionId);
+                    if (currentIndex !== -1 && currentIndex < sectionsOrder.length - 1) {
+                        initAutoScrollTimer(sectionsOrder[currentIndex + 1]);
+                    }
+                } else {
+                    entry.target.classList.remove('active');
+                }
+            });
+        }, { threshold: 0.5 });
+
+        reveals.forEach(element => revealObserver.observe(element));
+
+        window.addEventListener('wheel', () => clearTimeout(autoScrollTimer));
+        window.addEventListener('touchmove', () => clearTimeout(autoScrollTimer));
+
+        // Таймер
+        const targetDate = new Date('August 30, 2026 17:00:00').getTime();
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+            if (difference < 0) return;
+
+            const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = d < 10 ? '0' + d : d;
+            document.getElementById('hours').innerText = h < 10 ? '0' + h : h;
+            document.getElementById('minutes').innerText = m < 10 ? '0' + m : m;
+            document.getElementById('seconds').innerText = s < 10 ? '0' + s : s;
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Ватсап
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            clearTimeout(autoScrollTimer);
+            const name = document.getElementById('guestName').value;
+            const spouse = document.getElementById('spouseName').value || 'Жалғыз';
+            const attendance = document.querySelector('input[name="attendance"]:checked').value;
+            const messageText = `Сауалнама жауабы:\n\n👤 Аты-жөні: ${name}\n👥 Жұбайы: ${spouse}\n❓ Тойға келе ме: ${attendance}`;
+            window.open(`https://wa.me/77004001052?text=${encodeURIComponent(messageText)}`, '_blank');
+            document.getElementById('rsvpForm').reset();
+            slowScrollTo('footer');
+        }
+    </script>
+</body>
+</html>
