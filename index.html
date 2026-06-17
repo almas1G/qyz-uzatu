@@ -106,23 +106,41 @@
         .music-player-btn i { font-size: 14px; margin-bottom: 2px; }
         .music-player-btn span { font-size: 8px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
 
-        /* --- Скролл батырмалары --- */
+        /* --- СКРОЛЛ БАТЫРМАЛАРЫ - ИСПРАВЛЕНО! --- */
         .next-section-btn {
-            margin-top: 35px;
-            background: none;
+            position: relative;
+            z-index: 9999;
+            margin-top: 25px;
+            background: rgba(253, 251, 247, 0.85);
+            backdrop-filter: blur(4px);
             border: 2px solid var(--primary-brown);
             color: var(--primary-brown);
-            width: 45px;
-            height: 45px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            display: inline-flex;
+            display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             transition: all 0.3s ease;
+            flex-shrink: 0;
+            pointer-events: auto !important;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
         }
-        .next-section-btn i { font-size: 1.1rem; animation: bounceArrow 1.8s infinite; }
-        .timer-section-bg .next-section-btn { border-color: var(--white); color: var(--white); }
+        .next-section-btn:active {
+            transform: scale(0.92);
+        }
+        .next-section-btn i { 
+            font-size: 1.2rem; 
+            animation: bounceArrow 1.8s infinite;
+            pointer-events: none;
+        }
+        .timer-section-bg .next-section-btn { 
+            border-color: var(--white); 
+            color: var(--white);
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(4px);
+        }
 
         @keyframes bounceArrow {
             0%, 100% { transform: translateY(0); }
@@ -145,7 +163,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 60px 25px;
+            padding: 60px 25px 40px 25px;
             text-align: center;
             position: relative;
             background-color: var(--bg-cream);
@@ -164,7 +182,24 @@
             z-index: 1;
         }
 
-        .section-content { position: relative; z-index: 2; width: 100%; }
+        .section-content { 
+            position: relative; 
+            z-index: 2; 
+            width: 100%; 
+        }
+
+        /* Отдельный контейнер для кнопки, чтобы она была поверх всего */
+        .section-btn-wrapper {
+            position: relative;
+            z-index: 9999;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            pointer-events: none;
+        }
+        .section-btn-wrapper .next-section-btn {
+            pointer-events: auto !important;
+        }
 
         .font-script {
             font-family: 'Caveat', cursive;
@@ -181,7 +216,7 @@
         }
         .bouncing-text span { display: inline-block; animation: letterBounce 1.4s ease-in-out infinite; }
 
-        #hero { justify-content: space-between; padding-top: 100px; padding-bottom: 50px; }
+        #hero { justify-content: space-between; padding-top: 100px; padding-bottom: 30px; }
         
         .hero-top-graphic {
             width: 130px;
@@ -249,7 +284,7 @@
 </head>
 <body>
 
-    <!-- ОНЛАЙН ШАҚЫРУДЫ БАСТАУ ТЕРЕЗЕСІ (Кедергілерді жою) -->
+    <!-- ОНЛАЙН ШАҚЫРУДЫ БАСТАУ ТЕРЕЗЕСІ -->
     <div id="welcomeOverlay">
         <div class="welcome-card">
             <h2 class="font-script" style="font-size: 3rem; margin-bottom: 10px;">Бегім-Ай</h2>
@@ -266,7 +301,7 @@
         <span>Play</span>
     </div>
 
-    <!-- Сен берген нақты аудио файл -->
+    <!-- Аудио файл -->
     <audio id="bgAudio" loop preload="auto">
         <source src="WhatsApp Video 2026-06-17 at 21 (mp3cut.net).mp3" type="audio/mp3">
     </audio>
@@ -281,9 +316,11 @@
             <h1 class="font-script bouncing-text" id="bouncingTitle">Begim-Ay</h1>
             <h2 class="main-subtitle font-serif">Qyz Uzatu</h2>
         </div>
-        <button class="next-section-btn" onclick="slowScrollTo('invitation')">
-            <i class="fas fa-chevron-down"></i>
-        </button>
+        <div class="section-btn-wrapper">
+            <button class="next-section-btn" onclick="slowScrollTo('invitation')">
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </div>
     </section>
 
     <!-- СЕКЦИЯ 2: Шақыру -->
@@ -300,6 +337,8 @@
                 <div class="date-side">17:00</div>
             </div>
             <p style="letter-spacing: 3px; font-weight: 500; font-size: 1.1rem; color: var(--primary-brown);">ТАМЫЗ / 2026</p>
+        </div>
+        <div class="section-btn-wrapper">
             <button class="next-section-btn" onclick="slowScrollTo('calendar')">
                 <i class="fas fa-chevron-down"></i>
             </button>
@@ -308,6 +347,7 @@
 
     <!-- СЕКЦИЯ 3: Күнтізбе -->
     <section id="calendar">
+        <div class="bg-decor"></div>
         <div class="section-content reveal">
             <h2 class="font-script" style="font-size: 3.5rem; margin-bottom: 10px;">Той салтанаты</h2>
             <div class="calendar-container">
@@ -319,6 +359,8 @@
                     <div class="calendar-day heart-active"><span>30</span></div><div class="calendar-day"><span>31</span></div>
                 </div>
             </div>
+        </div>
+        <div class="section-btn-wrapper">
             <button class="next-section-btn" onclick="slowScrollTo('timer')">
                 <i class="fas fa-chevron-down"></i>
             </button>
@@ -327,6 +369,7 @@
 
     <!-- СЕКЦИЯ 4: Кері санақ -->
     <section id="timer" class="timer-section-bg">
+        <div class="bg-decor"></div>
         <div class="section-content reveal">
             <h2 class="font-script" style="font-size: 3.5rem;">Ұзату тойына дейін:</h2>
             <div class="countdown-container">
@@ -335,6 +378,8 @@
                 <div class="countdown-item"><span class="countdown-number" id="minutes">00</span><span class="countdown-label">Минут</span></div>
                 <div class="countdown-item"><span class="countdown-number" id="seconds">00</span><span class="countdown-label">Секунд</span></div>
             </div>
+        </div>
+        <div class="section-btn-wrapper">
             <button class="next-section-btn" onclick="slowScrollTo('location')">
                 <i class="fas fa-chevron-down"></i>
             </button>
@@ -353,7 +398,8 @@
                 <p class="address-hall">"Сұлтан Сарай"</p>
             </div>
             <a href="https://2gis.kz" target="_blank" class="map-btn"><i class="fas fa-map-marked-alt"></i> Картаны ашу</a>
-            <br>
+        </div>
+        <div class="section-btn-wrapper">
             <button class="next-section-btn" onclick="slowScrollTo('rsvp')">
                 <i class="fas fa-chevron-down"></i>
             </button>
@@ -385,6 +431,8 @@
                     <button type="submit" class="submit-btn">Жіберу</button>
                 </form>
             </div>
+        </div>
+        <div class="section-btn-wrapper">
             <button class="next-section-btn" onclick="slowScrollTo('footer')">
                 <i class="fas fa-chevron-down"></i>
             </button>
@@ -411,24 +459,20 @@
         const musicIcon = document.getElementById('musicIcon');
         const bgAudio = document.getElementById('bgAudio');
 
-        // КІРУ БАТЫРМАСЫН БАСҚАНДАҒЫ ФУНКЦИЯ
         function startInvitation() {
-            // Терезені жабу
             const overlay = document.getElementById('welcomeOverlay');
             overlay.style.opacity = '0';
             setTimeout(() => {
                 overlay.style.visibility = 'hidden';
-                musicToggle.style.display = 'flex'; // Плеерді көрсету
+                musicToggle.style.display = 'flex';
             }, 800);
 
-            // Музыканы бірден іске қосу (Браузер енді блокталмайды)
             bgAudio.play().then(() => {
                 isPlaying = true;
                 musicIcon.classList.replace('fa-music', 'fa-pause');
                 musicToggle.querySelector('span').innerText = 'Pause';
             }).catch(e => console.log("Музыка қосылмады:", e));
 
-            // Автоскроллды бірінші беттен бастау
             initAutoScrollTimer('invitation');
         }
 
@@ -440,7 +484,7 @@
             const targetPosition = target.offsetTop;
             const startPosition = window.pageYOffset;
             const distance = targetPosition - startPosition;
-            const duration = 1500;
+            const duration = 1200;
             let start = null;
 
             function step(timestamp) {
@@ -458,20 +502,22 @@
                 }
             }
             window.requestAnimationFrame(step);
+            
+            // Отключаем автоскролл при ручном клике
+            clearTimeout(autoScrollTimer);
         }
 
         function initAutoScrollTimer(nextSectionId) {
             clearTimeout(autoScrollTimer);
-            if (!nextSectionId || nextSectionId === 'rsvp') return;
+            if (!nextSectionId || nextSectionId === 'rsvp' || nextSectionId === 'footer') return;
 
             autoScrollTimer = setTimeout(() => {
                 if (!isScrolling) {
                     slowScrollTo(nextSectionId);
                 }
-            }, 5000); // 5 секунд сайын ауысады
+            }, 6000);
         }
 
-        // Қолмен басқару плеери
         musicToggle.addEventListener('click', (e) => {
             e.stopPropagation();
             if (isPlaying) {
@@ -487,7 +533,6 @@
             }
         });
 
-        // Әріптер анимациясы
         const titleContainer = document.getElementById('bouncingTitle');
         const rawText = titleContainer.innerText;
         titleContainer.innerHTML = '';
@@ -498,7 +543,6 @@
             titleContainer.appendChild(span);
         });
 
-        // Элементтердің көрінуін бақылау
         const reveals = document.querySelectorAll('.reveal');
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -513,14 +557,13 @@
                     entry.target.classList.remove('active');
                 }
             });
-        }, { threshold: 0.5 });
+        }, { threshold: 0.4 });
 
         reveals.forEach(element => revealObserver.observe(element));
 
-        window.addEventListener('wheel', () => clearTimeout(autoScrollTimer));
-        window.addEventListener('touchmove', () => clearTimeout(autoScrollTimer));
+        window.addEventListener('wheel', () => clearTimeout(autoScrollTimer), {passive: true});
+        window.addEventListener('touchmove', () => clearTimeout(autoScrollTimer), {passive: true});
 
-        // Таймер
         const targetDate = new Date('August 30, 2026 17:00:00').getTime();
         function updateCountdown() {
             const now = new Date().getTime();
@@ -540,7 +583,6 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // Ватсап
         function handleFormSubmit(event) {
             event.preventDefault();
             clearTimeout(autoScrollTimer);
