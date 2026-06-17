@@ -5,12 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Qyz Uzatu | Шақыру</title>
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -37,7 +34,7 @@
             font-size: 14px;
         }
 
-        /* --- КІРУ ТЕРЕЗЕСІ (WELCOME SCREEN) --- */
+        /* КІРУ ТЕРЕЗЕСІ */
         #welcomeOverlay {
             position: fixed;
             top: 0;
@@ -45,7 +42,7 @@
             width: 100%;
             height: 100%;
             background-color: var(--bg-cream);
-            z-index: 9999;
+            z-index: 999999;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -81,12 +78,12 @@
             gap: 10px;
         }
 
-        /* --- Плеер батырмасы --- */
+        /* ПЛЕЕР */
         .music-player-btn {
             position: fixed;
             top: 20px;
             right: 20px;
-            z-index: 1000;
+            z-index: 99999;
             background-color: var(--primary-brown);
             color: var(--white);
             border: 2px solid var(--bg-cream);
@@ -106,13 +103,14 @@
         .music-player-btn i { font-size: 14px; margin-bottom: 2px; }
         .music-player-btn span { font-size: 8px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
 
-        /* --- СКРОЛЛ БАТЫРМАЛАРЫ - ИСПРАВЛЕНО! --- */
+        /* СКРОЛЛ КНОПКАЛАРЫ */
         .next-section-btn {
             position: relative;
-            z-index: 9999;
-            margin-top: 25px;
-            background: rgba(253, 251, 247, 0.85);
+            z-index: 99999 !important;
+            margin-top: 20px;
+            background: rgba(253, 251, 247, 0.9);
             backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             border: 2px solid var(--primary-brown);
             color: var(--primary-brown);
             width: 50px;
@@ -121,7 +119,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
+            cursor: pointer !important;
             transition: all 0.3s ease;
             flex-shrink: 0;
             pointer-events: auto !important;
@@ -188,10 +186,9 @@
             width: 100%; 
         }
 
-        /* Отдельный контейнер для кнопки, чтобы она была поверх всего */
         .section-btn-wrapper {
             position: relative;
-            z-index: 9999;
+            z-index: 99999;
             width: 100%;
             display: flex;
             justify-content: center;
@@ -201,29 +198,35 @@
             pointer-events: auto !important;
         }
 
+        /* === ТҮЗЕТІЛГЕН FONT-SIZE (ТЕЛЕФОНҒА БЕЙІМДЕУ) === */
         .font-script {
             font-family: 'Caveat', cursive;
-            font-size: 3.8rem;
+            font-size: 3.2rem;
             color: var(--primary-brown);
             font-weight: 700;
-            line-height: 1.1;
+            line-height: 1.2;
+            word-break: break-word;
         }
         .font-serif { font-family: 'Playfair Display', serif; letter-spacing: 1px; }
 
         @keyframes letterBounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
+            50% { transform: translateY(-10px); }
         }
-        .bouncing-text span { display: inline-block; animation: letterBounce 1.4s ease-in-out infinite; }
+        .bouncing-text span { 
+            display: inline-block; 
+            animation: letterBounce 1.4s ease-in-out infinite;
+            white-space: pre;
+        }
 
-        #hero { justify-content: space-between; padding-top: 100px; padding-bottom: 30px; }
+        #hero { justify-content: space-between; padding-top: 80px; padding-bottom: 30px; }
         
         .hero-top-graphic {
-            width: 130px;
-            height: 130px;
+            width: 110px;
+            height: 110px;
             border: 2px solid var(--primary-brown);
             border-radius: 50% 50% 0 0;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             position: relative;
             display: flex;
             justify-content: center;
@@ -237,54 +240,108 @@
             border: 1px dashed var(--primary-brown);
             border-radius: 50% 50% 0 0;
         }
-        .hero-top-icon { font-size: 2.5rem; color: var(--primary-brown); opacity: 0.8; }
-        .main-subtitle { text-transform: uppercase; letter-spacing: 6px; font-size: 1.2rem; color: var(--dark-text); margin-top: 10px; }
+        .hero-top-icon { font-size: 2rem; color: var(--primary-brown); opacity: 0.8; }
+        .main-subtitle { text-transform: uppercase; letter-spacing: 4px; font-size: 1rem; color: var(--dark-text); margin-top: 5px; }
 
-        .invitation-header { margin-bottom: 20px; }
-        .invitation-text { font-size: 1.05rem; line-height: 1.8; color: var(--dark-text); margin-bottom: 30px; padding: 0 10px; }
+        .invitation-header { margin-bottom: 15px; }
+        .invitation-text { font-size: 1rem; line-height: 1.7; color: var(--dark-text); margin-bottom: 20px; padding: 0 5px; }
 
-        .big-date-display { display: flex; justify-content: center; align-items: center; margin: 30px 0; color: var(--primary-brown); }
-        .date-side { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; padding: 0 15px; }
-        .date-center { font-size: 3.5rem; font-family: 'Playfair Display', serif; font-weight: 600; border-left: 1px solid var(--primary-brown); border-right: 1px solid var(--primary-brown); padding: 0 25px; line-height: 1; }
+        .big-date-display { display: flex; justify-content: center; align-items: center; margin: 20px 0; color: var(--primary-brown); flex-wrap: wrap; }
+        .date-side { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; padding: 0 10px; }
+        .date-center { font-size: 3rem; font-family: 'Playfair Display', serif; font-weight: 600; border-left: 1px solid var(--primary-brown); border-right: 1px solid var(--primary-brown); padding: 0 20px; line-height: 1; }
 
-        .calendar-container { width: 100%; max-width: 340px; margin: 20px auto; background: rgba(255, 255, 255, 0.6); padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); border: 1px solid rgba(134, 93, 54, 0.1); }
-        .calendar-month { text-transform: uppercase; letter-spacing: 4px; font-size: 1.1rem; margin-bottom: 15px; font-weight: 600; color: var(--primary-brown); }
-        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; text-align: center; }
-        .calendar-day-name { font-size: 0.75rem; font-weight: 600; opacity: 0.6; padding-bottom: 5px; }
-        .calendar-day { font-size: 0.95rem; padding: 6px 0; position: relative; display: flex; justify-content: center; align-items: center; }
-        .calendar-day.heart-active::after { content: '♥'; position: absolute; font-size: 2.2rem; color: transparent; -webkit-text-stroke: 1px var(--primary-brown); z-index: 1; transform: scale(1.1); }
+        .calendar-container { width: 100%; max-width: 320px; margin: 15px auto; background: rgba(255, 255, 255, 0.6); padding: 15px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); border: 1px solid rgba(134, 93, 54, 0.1); }
+        .calendar-month { text-transform: uppercase; letter-spacing: 3px; font-size: 0.95rem; margin-bottom: 12px; font-weight: 600; color: var(--primary-brown); }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; }
+        .calendar-day-name { font-size: 0.65rem; font-weight: 600; opacity: 0.6; padding-bottom: 3px; }
+        .calendar-day { font-size: 0.85rem; padding: 4px 0; position: relative; display: flex; justify-content: center; align-items: center; }
+        .calendar-day.heart-active::after { content: '♥'; position: absolute; font-size: 1.8rem; color: transparent; -webkit-text-stroke: 1px var(--primary-brown); z-index: 1; }
         .calendar-day.heart-active span { position: relative; z-index: 2; color: var(--primary-brown); font-weight: bold; }
 
         .timer-section-bg { background-color: var(--primary-brown) !important; color: var(--white); }
         .timer-section-bg .font-script { color: var(--white); }
-        .countdown-container { display: flex; justify-content: space-between; width: 100%; max-width: 340px; margin: 30px 0; }
-        .countdown-item { flex: 1; margin: 0 5px; background: rgba(255, 255, 255, 0.12); padding: 15px 5px; border-radius: 50%; width: 75px; height: 75px; display: flex; flex-direction: column; justify-content: center; align-items: center; border: 1px solid rgba(255,255,255,0.2); }
-        .countdown-number { font-size: 1.4rem; font-family: 'Playfair Display', serif; font-weight: 600; }
-        .countdown-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin-top: 2px; }
+        .countdown-container { display: flex; justify-content: space-between; width: 100%; max-width: 300px; margin: 20px 0; }
+        .countdown-item { flex: 1; margin: 0 4px; background: rgba(255, 255, 255, 0.12); padding: 12px 3px; border-radius: 50%; width: 65px; height: 65px; display: flex; flex-direction: column; justify-content: center; align-items: center; border: 1px solid rgba(255,255,255,0.2); }
+        .countdown-number { font-size: 1.2rem; font-family: 'Playfair Display', serif; font-weight: 600; }
+        .countdown-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8; margin-top: 2px; }
 
-        .address-block { margin: 25px 0; font-size: 1.1rem; }
-        .address-title { text-transform: uppercase; letter-spacing: 3px; font-size: 0.9rem; opacity: 0.7; margin-bottom: 5px; }
-        .address-hall { font-size: 1.4rem; font-weight: 600; color: var(--primary-brown); margin: 10px 0; }
-        .map-btn { background-color: var(--primary-brown); color: var(--white); border: none; padding: 14px 35px; border-radius: 30px; font-family: 'Montserrat', sans-serif; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; font-size: 0.85rem; margin-top: 15px; cursor: pointer; box-shadow: 0 4px 12px rgba(134, 93, 54, 0.3); display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+        .address-block { margin: 15px 0; font-size: 1rem; }
+        .address-title { text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; opacity: 0.7; margin-bottom: 3px; }
+        .address-hall { font-size: 1.2rem; font-weight: 600; color: var(--primary-brown); margin: 5px 0; }
+        .map-btn { background-color: var(--primary-brown); color: var(--white); border: none; padding: 12px 28px; border-radius: 30px; font-family: 'Montserrat', sans-serif; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; font-size: 0.75rem; margin-top: 10px; cursor: pointer; box-shadow: 0 4px 12px rgba(134, 93, 54, 0.3); display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
 
-        .rsvp-card { width: 100%; max-width: 360px; background: var(--white); border-radius: 20px; padding: 30px 20px; box-shadow: 0 10px 30px rgba(134, 93, 54, 0.08); border: 1px solid rgba(134, 93, 54, 0.1); }
-        .form-group { margin-bottom: 20px; text-align: left; }
-        .form-group label { display: block; font-size: 0.85rem; margin-bottom: 8px; font-weight: 500; }
-        .form-control { width: 100%; background-color: var(--bg-cream); border: 1px solid rgba(134, 93, 54, 0.2); padding: 12px 15px; border-radius: 10px; font-family: inherit; font-size: 0.95rem; }
+        .rsvp-card { width: 100%; max-width: 340px; background: var(--white); border-radius: 20px; padding: 25px 18px; box-shadow: 0 10px 30px rgba(134, 93, 54, 0.08); border: 1px solid rgba(134, 93, 54, 0.1); }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; font-size: 0.8rem; margin-bottom: 6px; font-weight: 500; }
+        .form-control { width: 100%; background-color: var(--bg-cream); border: 1px solid rgba(134, 93, 54, 0.2); padding: 10px 14px; border-radius: 10px; font-family: inherit; font-size: 0.9rem; }
         .form-control:focus { outline: none; border-color: var(--primary-brown); background-color: var(--white); }
-        .radio-group { display: flex; flex-direction: column; gap: 10px; margin-top: 5px; }
-        .radio-option { display: flex; align-items: center; position: relative; cursor: pointer; padding: 5px 0; }
-        .radio-option input { margin-right: 12px; accent-color: var(--primary-brown); width: 18px; height: 18px; }
-        .submit-btn { width: 100%; background-color: var(--primary-brown); color: var(--white); border: none; padding: 14px; border-radius: 10px; font-family: 'Montserrat', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 12px rgba(134, 93, 54, 0.2); }
+        .radio-group { display: flex; flex-direction: column; gap: 8px; margin-top: 3px; }
+        .radio-option { display: flex; align-items: center; cursor: pointer; padding: 3px 0; }
+        .radio-option input { margin-right: 10px; accent-color: var(--primary-brown); width: 16px; height: 16px; }
+        .submit-btn { width: 100%; background-color: var(--primary-brown); color: var(--white); border: none; padding: 12px; border-radius: 10px; font-family: 'Montserrat', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; cursor: pointer; margin-top: 5px; box-shadow: 0 4px 12px rgba(134, 93, 54, 0.2); }
 
-        .hosts-block { margin-top: 20px; }
-        .hosts-names { font-size: 1.5rem; font-weight: 500; letter-spacing: 1px; margin-top: 5px; color: var(--primary-brown); }
-        .footer-note { font-size: 1.4rem; line-height: 1.8; margin-top: 40px; padding: 0 15px; }
+        .hosts-block { margin-top: 15px; }
+        .hosts-names { font-size: 1.3rem; font-weight: 500; letter-spacing: 1px; margin-top: 3px; color: var(--primary-brown); }
+        .footer-note { font-size: 1.2rem; line-height: 1.7; margin-top: 30px; padding: 0 10px; }
+
+        /* === ТЕЛЕФОНҒА АРНАЛҒАН ТҮЗЕТУЛЕР === */
+        @media (max-width: 480px) {
+            .font-script {
+                font-size: 2.8rem !important;
+            }
+            .invitation-header {
+                font-size: 2.8rem !important;
+            }
+            .date-center {
+                font-size: 2.5rem !important;
+            }
+            #hero {
+                padding-top: 60px !important;
+            }
+            .hero-top-graphic {
+                width: 90px !important;
+                height: 90px !important;
+            }
+            .hero-top-icon {
+                font-size: 1.6rem !important;
+            }
+            .main-subtitle {
+                font-size: 0.85rem !important;
+                letter-spacing: 3px !important;
+            }
+            section {
+                padding: 40px 15px 30px 15px !important;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .font-script {
+                font-size: 2.2rem !important;
+            }
+            .date-center {
+                font-size: 2rem !important;
+                padding: 0 12px !important;
+            }
+            .date-side {
+                font-size: 0.7rem !important;
+                padding: 0 5px !important;
+            }
+            .countdown-item {
+                width: 50px !important;
+                height: 50px !important;
+                padding: 8px 2px !important;
+            }
+            .countdown-number {
+                font-size: 1rem !important;
+            }
+            .countdown-label {
+                font-size: 0.5rem !important;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- ОНЛАЙН ШАҚЫРУДЫ БАСТАУ ТЕРЕЗЕСІ -->
     <div id="welcomeOverlay">
         <div class="welcome-card">
             <h2 class="font-script" style="font-size: 3rem; margin-bottom: 10px;">Бегім-Ай</h2>
@@ -295,18 +352,16 @@
         </div>
     </div>
 
-    <!-- Музыка түймесі -->
     <div class="music-player-btn" id="musicToggle" style="display: none;">
         <i class="fas fa-music" id="musicIcon"></i>
         <span>Play</span>
     </div>
 
-    <!-- Аудио файл -->
     <audio id="bgAudio" loop preload="auto">
         <source src="WhatsApp Video 2026-06-17 at 21 (mp3cut.net).mp3" type="audio/mp3">
     </audio>
 
-    <!-- СЕКЦИЯ 1: Басты бет -->
+    <!-- СЕКЦИЯ 1 -->
     <section id="hero">
         <div class="bg-decor"></div>
         <div class="hero-top-graphic reveal active">
@@ -323,11 +378,11 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ 2: Шақыру -->
+    <!-- СЕКЦИЯ 2 -->
     <section id="invitation">
         <div class="bg-decor"></div>
         <div class="section-content reveal">
-            <h2 class="font-script invitation-header" style="font-size: 3.5rem;">Құрметті қонақтар!</h2>
+            <h2 class="font-script invitation-header">Құрметті қонақтар!</h2>
             <p class="invitation-text">
                 Сіздерді аяулы қызымыз <b>Бегім-Айдың</b> ұзату тойына арналған салтанатты ақ дастарханымыздың қадірлі қонағы болуға шақырамыз!
             </p>
@@ -336,7 +391,7 @@
                 <div class="date-center">30</div>
                 <div class="date-side">17:00</div>
             </div>
-            <p style="letter-spacing: 3px; font-weight: 500; font-size: 1.1rem; color: var(--primary-brown);">ТАМЫЗ / 2026</p>
+            <p style="letter-spacing: 3px; font-weight: 500; font-size: 1rem; color: var(--primary-brown);">ТАМЫЗ / 2026</p>
         </div>
         <div class="section-btn-wrapper">
             <button class="next-section-btn" onclick="slowScrollTo('calendar')">
@@ -345,11 +400,11 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ 3: Күнтізбе -->
+    <!-- СЕКЦИЯ 3 -->
     <section id="calendar">
         <div class="bg-decor"></div>
         <div class="section-content reveal">
-            <h2 class="font-script" style="font-size: 3.5rem; margin-bottom: 10px;">Той салтанаты</h2>
+            <h2 class="font-script" style="font-size: 3rem; margin-bottom: 10px;">Той салтанаты</h2>
             <div class="calendar-container">
                 <div class="calendar-month font-serif">Тамыз 2026</div>
                 <div class="calendar-grid">
@@ -367,11 +422,11 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ 4: Кері санақ -->
+    <!-- СЕКЦИЯ 4 -->
     <section id="timer" class="timer-section-bg">
         <div class="bg-decor"></div>
         <div class="section-content reveal">
-            <h2 class="font-script" style="font-size: 3.5rem;">Ұзату тойына дейін:</h2>
+            <h2 class="font-script" style="font-size: 2.8rem;">Ұзату тойына дейін:</h2>
             <div class="countdown-container">
                 <div class="countdown-item"><span class="countdown-number" id="days">00</span><span class="countdown-label">Күн</span></div>
                 <div class="countdown-item"><span class="countdown-number" id="hours">00</span><span class="countdown-label">Сағат</span></div>
@@ -386,11 +441,11 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ 5: Мекен-жай -->
+    <!-- СЕКЦИЯ 5 -->
     <section id="location">
         <div class="bg-decor"></div>
         <div class="section-content reveal">
-            <h2 class="font-script" style="font-size: 3.5rem;">Мекен-жайымыз</h2>
+            <h2 class="font-script" style="font-size: 3rem;">Мекен-жайымыз</h2>
             <div class="address-block"><p class="address-title">Ауыл / Қала</p><p style="font-weight: 500;">Алматы қаласы</p></div>
             <div class="address-block"><p class="address-title">Көшесі</p><p style="font-weight: 500;">Атагельды Исмаилова 24</p></div>
             <div class="address-block">
@@ -406,11 +461,11 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ 6: Сауалнама -->
+    <!-- СЕКЦИЯ 6 -->
     <section id="rsvp">
         <div class="bg-decor"></div>
         <div class="section-content reveal">
-            <h2 class="font-script" style="font-size: 3.5rem; margin-bottom: 5px;">Сауалнама</h2>
+            <h2 class="font-script" style="font-size: 2.8rem; margin-bottom: 5px;">Сауалнама</h2>
             <div class="rsvp-card">
                 <form id="rsvpForm" onsubmit="handleFormSubmit(event)">
                     <div class="form-group">
@@ -439,13 +494,13 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ 7: Подвал -->
+    <!-- СЕКЦИЯ 7 -->
     <section id="footer">
         <div class="bg-decor"></div>
         <div class="section-content reveal">
-            <div class="hosts-block"><p style="text-transform: uppercase; letter-spacing: 3px; font-size: 0.85rem; opacity: 0.7;">Той иелері:</p><p class="hosts-names font-serif">Гайдар - Меруерт</p></div>
+            <div class="hosts-block"><p style="text-transform: uppercase; letter-spacing: 3px; font-size: 0.8rem; opacity: 0.7;">Той иелері:</p><p class="hosts-names font-serif">Гайдар - Меруерт</p></div>
             <p class="font-script footer-note">Келіңіздер, тойымыздың қадірлі қонағы болыңыздар!</p>
-            <div style="margin-top: 50px; opacity: 0.4; font-size: 0.8rem;">© 2026 Салтанатты Шақыру</div>
+            <div style="margin-top: 40px; opacity: 0.4; font-size: 0.75rem;">© 2026 Салтанатты Шақыру</div>
         </div>
     </section>
 
@@ -502,8 +557,6 @@
                 }
             }
             window.requestAnimationFrame(step);
-            
-            // Отключаем автоскролл при ручном клике
             clearTimeout(autoScrollTimer);
         }
 
